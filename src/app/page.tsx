@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import SearchBar from "../components/searchBar";
+import SearchBar from "../components/SearchBar";
 
 export default function Home() {
   const handleSearch = (query: string) => {
@@ -13,17 +13,17 @@ export default function Home() {
         id="navbar-container"
         className="font-mono border-b-2 border-slate-700 flex"
       >
-        <div id="navbar-left" className="flex">
-          <div className="m-2 border-2 rounded-lg">
+        <div id="navbar-left" className="flex items-center">
+          <div className="m-3 border-2 rounded-lg">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="FoodHub Icon"
-              width={80}
+              width={60}
               height={60}
-              className="w-auto"
+              className="w-32 h-9 bg-white"
             />
           </div>
-          <div className="border-2 rounded-lg p-2 m-2">
+          <div className="border-2 rounded-lg p-1 m-3 flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -40,16 +40,14 @@ export default function Home() {
             </svg>
           </div>
         </div>
-        <div id="navbar-middle">
-          <div className="container mx-auto p-4">
-            <SearchBar
-              onSearch={handleSearch}
-              placeholder="Type to search..."
-              buttonText="Go"
-            />
-          </div>
+        <div id="navbar-middle" className="flex items-center">
+          <SearchBar
+            onSearch={handleSearch}
+            placeholder="Type to search..."
+            buttonText="Go"
+          />
         </div>
-        <div id="navbar-right"></div>
+        <div id="navbar-right" className="flex items-center"></div>
         {/* <Image src="/logo.png" alt="FoodHub Icon" width="100" height="100" /> */}
       </div>
     </main>
