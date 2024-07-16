@@ -20,6 +20,9 @@ export default function SearchBar({
     e.preventDefault();
     onSearch(query);
   };
+  const clearInput = () => {
+    setQuery("");
+  };
 
   return (
     <form onSubmit={handleSearch} className="flex items-center p-2 relative">
@@ -34,9 +37,13 @@ export default function SearchBar({
         <div className="absolute pl-3 inset-y-0 flex items-center pointer-events-none">
           <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
         </div>
-        {/* <div className="">
-          <XCircleIcon className="w-6 h-6 text-gray-400" />
-        </div> */}
+        <div className="absolute pr-3 inset-y-0 right-1 flex items-center">
+          {query && (
+            <button type="button" onClick={clearInput}>
+              <XCircleIcon className="w-6 h-6 text-gray-400" />
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );
