@@ -1,24 +1,13 @@
 "use client";
 import { useState, FormEvent } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-  placeholder?: string;
-  buttonText?: string;
-}
-
-export default function SearchBar({
-  onSearch,
-  placeholder = "Search...",
-  buttonText = "Search",
-}: SearchBarProps) {
+export default function SearchBar() {
   const [query, setQuery] = useState<string>("");
-
+  const placeholder = "Type to search...";
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    onSearch(query);
+    console.log("Searching for:", query);
   };
   const clearInput = () => {
     setQuery("");
@@ -30,7 +19,7 @@ export default function SearchBar({
         <input
           type="text"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
           className="w-128 p-2 px-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 searchbar-bg"
         />
