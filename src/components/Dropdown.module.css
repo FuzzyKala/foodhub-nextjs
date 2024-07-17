@@ -1,0 +1,20 @@
+/* styles/UserDropdown.module.css */
+.dropdown {
+  position: absolute;
+  right: 1rem;
+  width: 9rem;
+  background-color: #d1d5db;
+  border: 1px solid #9ca3af;
+  border-radius: 0.375rem;
+  color: #1f2937;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+.dropdownOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
