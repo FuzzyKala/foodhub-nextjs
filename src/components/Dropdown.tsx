@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Dropdown.module.css";
 
 export default function Dropdown() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const handleClickOutsideOfDropdown = (e: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(e.target as Node)
+    ) {
+      setDropdownOpen(false);
+      // console.log("log current:", dropdownRef.current);
+      // console.log("e:", e);
+      // console.log("e.target:", e.target);
+    }
+  };
+  useEffect(() => {
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutsideOfDropdown);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideOfDropdown);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideOfDropdown);
+    };
+  }, [dropdownOpen]);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <div
         id="userProfile"
         className="flex items-center m-3"
