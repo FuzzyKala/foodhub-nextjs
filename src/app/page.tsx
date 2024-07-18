@@ -11,7 +11,7 @@ export default function Home() {
       <header>
         <div
           id="navBar"
-          className="font-mono border-b-2 border-slate-700 flex justify-between bg-gray-800"
+          className="border-b-2 border-slate-700 flex justify-between bg-gray-800"
         >
           <div id="navBar-left" className="flex items-center">
             <Logo />

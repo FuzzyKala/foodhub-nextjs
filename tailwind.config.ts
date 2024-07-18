@@ -14,6 +14,9 @@ const config: Config = {
       fontFamily: {
         mono: ["Roboto Mono", "monospace"],
       },
+      colors: {
+        searchBar: "#2a3236",
+      },
     },
   },
   plugins: [],

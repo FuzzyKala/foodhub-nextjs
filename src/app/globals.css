@@ -1,10 +1,12 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+@import "tailwindcss/base" layer(my-base);
+/* @import "./custom-base-styles.css" layer(my-base); */
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss/components" layer(my-components);
+
+/* @import "./custom-components.css" layer(my-components); */
+
+@import "tailwindcss/utilities" layer(my-utilities);
+/* @import "./custom-utilities.css" layer(my-utilities); */
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -21,10 +23,11 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  font-family: noto sans, sans-serif;
 }
-
-@layer utilities {
-  .searchbar-bg {
-    background-color: #2a3236;
+/* @layer components {
+  .card {
+    @apply bg-white shadow-md rounded-lg p-4;
+    background-color: #181c1f;
   }
-}
+} */

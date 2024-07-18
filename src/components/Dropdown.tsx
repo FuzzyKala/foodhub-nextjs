@@ -58,7 +58,7 @@ export default function Dropdown() {
         <ul>
           <div
             id="userProfile"
-            className="flex items-center p-2 hover:bg-gray-300 cursor-pointer "
+            className="flex items-center p-2 hover:bg-gray-400 hover:rounded cursor-pointer"
           >
             <div>
               <svg
@@ -82,7 +82,7 @@ export default function Dropdown() {
           </div>
           <div
             id="userSettings"
-            className="flex items-center p-2 hover:bg-gray-300 cursor-pointer"
+            className="flex items-center p-2 hover:bg-gray-400 hover:rounded cursor-pointer"
           >
             <div>
               <svg
@@ -111,7 +111,7 @@ export default function Dropdown() {
           </div>
           <div
             id="userLogout"
-            className="flex items-center p-2 hover:bg-gray-300 cursor-pointer"
+            className="flex items-center p-2 hover:bg-gray-400 hover:rounded cursor-pointer"
           >
             <div>
               <svg
