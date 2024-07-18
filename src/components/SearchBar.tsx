@@ -21,7 +21,7 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          className="w-128 p-2 px-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 searchbar-bg"
+          className="w-128 p-2 px-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 searchbar-bg "
         />
         <div className="absolute pl-3 inset-y-0 flex items-center pointer-events-none">
           <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
