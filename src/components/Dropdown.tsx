@@ -30,11 +30,7 @@ export default function Dropdown() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div
-        id="userProfile"
-        className="flex items-center m-3"
-        onClick={toggleDropdown}
-      >
+      <div id="userIcon" className="flex m-3" onClick={toggleDropdown}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -51,6 +47,7 @@ export default function Dropdown() {
         </svg>
       </div>
       <div
+        id="dropdownTable"
         className={`${styles.dropdown} ${
           dropdownOpen ? styles.dropdownOpen : ""
         }`}

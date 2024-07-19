@@ -11,25 +11,30 @@ export default function Home() {
       <header>
         <div
           id="navBar"
-          className="border-b-2 border-slate-700 flex justify-between bg-gray-800"
+          className="border-b-2 border-slate-500 flex justify-between bg-gray-800"
         >
-          <div id="navBar-left" className="flex items-center">
+          <div id="navBar-left" className="flex basis-1/3 pl-20">
             <Logo />
             {/* <MenuIcon /> */}
           </div>
-          <div id="navBar-middle" className="flex items-center">
+          <div id="navBar-middle" className="flex basis-1/3">
             <SearchBar />
           </div>
-          <div id="navBar-right" className="flex items-center">
+          <div id="navBar-right" className="flex basis-1/3 justify-end pr-10">
             <Dropdown />
           </div>
         </div>
       </header>
       <main className="flex flex-row">
-        <div id="cardSection" className="basis-3/4 bg-lime-950">
+        <div
+          id="cardSection"
+          className="basis-3/4 bg-neutral-700 py-10 px-60 border-r-2 border-slate-500"
+        >
+          <Card />
+          <Card />
           <Card />
         </div>
-        <div id="commentSection" className="basis-1/4 bg-amber-950">
+        <div id="commentSection" className="basis-1/4 bg-gray-900">
           text
         </div>
       </main>
