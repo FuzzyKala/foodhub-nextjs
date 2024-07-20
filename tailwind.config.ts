@@ -11,9 +11,6 @@ const config: Config = {
       width: {
         "128": "32rem",
       },
-      fontFamily: {
-        mono: ["Roboto Mono", "monospace"],
-      },
       colors: {
         searchBar: "#2a3236",
       },

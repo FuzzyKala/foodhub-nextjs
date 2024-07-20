@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PiArrowFatUp, PiArrowFatDown } from "react-icons/pi";
 import { BiComment } from "react-icons/bi";
+import styles from "@/components/Card.module.css";
 
 export default function Card() {
   return (
@@ -39,10 +40,10 @@ export default function Card() {
         </div>
         <div id="cardBody" className="mx-5 mb-3">
           <div id="title" className="text-2xl font-bold">
-            <p>
+            <h1>
               Title might be a little bit long, so how long can it be? Can it be
               long enough like a train?
-            </p>
+            </h1>
           </div>
           {/* <div id="divideLine" className="p-2">
         <hr className="bg-white" />
@@ -89,17 +90,14 @@ export default function Card() {
           </div>
         </div>
         <div id="cardFooter" className="mx-5 flex">
-          <div
-            id="rating"
-            className="bg-slate-700 bg-opacity-50 rounded-lg flex px-3 py-2 mr-2"
-          >
+          <div id="rating" className={styles.footerBtn}>
             <PiArrowFatUp size={25} className="mx-1 hover:fill-red-600" />
             <div className="mx-1">Num</div>
             <PiArrowFatDown size={25} className="mx-1 hover:fill-indigo-400" />
           </div>
           <div
             id="comment"
-            className="bg-slate-700 bg-opacity-50 rounded-lg flex px-3 py-2 mr-2"
+            className={`${styles.footerBtn} hover:bg-opacity-100`}
           >
             <BiComment size={25} className="mx-1" />
           </div>

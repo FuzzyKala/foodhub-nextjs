@@ -25,7 +25,7 @@ export default function Home() {
       <main className="flex flex-row pt-20">
         <div
           id="cardSection"
-          className="basis-3/4 bg-gray-900 py-10 px-60 border-r-2 border-slate-500"
+          className="basis-3/4 py-10 px-60 border-r-2 border-slate-500"
         >
           <Card />
           <DivideLine />
