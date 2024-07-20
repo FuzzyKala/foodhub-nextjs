@@ -1,13 +1,19 @@
 "use client";
 
-import SearchBar from "@/components/SearchBar";
-import Dropdown from "@/components/Dropdown";
-import Logo from "@/components/Logo";
-import MenuIcon from "@/components/MenuIcon";
-import Card from "@/components/Card";
-import DivideLine from "@/components/DivideLine";
+import { useRouter } from "next/router";
+import Logo from "@/components/navBar/Logo";
+import SearchBar from "@/components/navBar/SearchBar";
+import Dropdown from "@/components/navBar/Dropdown";
+
+import Card from "@/components/postCard/Card";
+import DivideLine from "@/components/postCard/DivideLine";
+
+import PageLink from "@/components/sideBar/PageLink";
 
 export default function Home() {
+  const router = useRouter();
+  const currentPage = router.pathname;
+  console.log("Current page:", currentPage);
   return (
     <div>
       <header id="navBar">
@@ -34,8 +40,8 @@ export default function Home() {
           <Card />
           <DivideLine />
         </div>
-        <div id="commentSection" className="basis-1/4 bg-gray-900">
-          text
+        <div id="sideBar" className="basis-1/4 bg-gray-900 p-10 text-xl">
+          <PageLink currentPage={currentPage} />
         </div>
       </main>
     </div>

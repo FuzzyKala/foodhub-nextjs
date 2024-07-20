@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { PiArrowFatUp, PiArrowFatDown } from "react-icons/pi";
 import { BiComment } from "react-icons/bi";
-import styles from "@/components/Card.module.css";
+import styles from "@/components/postCard/Card.module.css";
 
 export default function Card() {
   return (

@@ -1,7 +1,6 @@
 "use client";
 import { useState, FormEvent } from "react";
 import { MagnifyingGlassIcon, XCircleIcon } from "@heroicons/react/24/outline";
-import styles from "./SearchBar.module.css";
 
 export default function SearchBar() {
   const [query, setQuery] = useState<string>("");
@@ -22,7 +21,7 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          className={styles.searchBar}
+          className="w-128 p-2 px-10 rounded-lg bg-searchBar"
         />
         <div className="absolute pl-3 inset-y-0 flex items-center pointer-events-none">
           <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />

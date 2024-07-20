@@ -1,12 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
-
-const robotoMono = Roboto_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-roboto-mono",
-});
 
 export const metadata: Metadata = {
   title: "FoodHub",
@@ -19,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${robotoMono.variable} font-sans`}>
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
