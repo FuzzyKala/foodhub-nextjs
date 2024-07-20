@@ -22,7 +22,6 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          // className="w-128 p-2 px-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-searchBar"
           className={styles.searchBar}
         />
         <div className="absolute pl-3 inset-y-0 flex items-center pointer-events-none">

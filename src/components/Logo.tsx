@@ -8,7 +8,7 @@ export default function Logo() {
         alt="FoodHub Logo"
         width={60}
         height={60}
-        className="w-auto h-24 rounded-md"
+        className="w-auto h-20 rounded-md"
       />
     </div>
   );

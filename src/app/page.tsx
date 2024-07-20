@@ -1,4 +1,5 @@
 "use client";
+
 import SearchBar from "@/components/SearchBar";
 import Dropdown from "@/components/Dropdown";
 import Logo from "@/components/Logo";
@@ -9,25 +10,19 @@ import DivideLine from "@/components/DivideLine";
 export default function Home() {
   return (
     <div>
-      <header
-        id="navBar"
-        className="border-b-2 border-slate-500 flex justify-between bg-gray-900"
-      >
-        <div id="navBar-left" className="flex basis-1/3 pl-20 items-center">
+      <header id="navBar">
+        <div id="navBar-left" className="navBarBlock pl-20">
           <Logo />
           {/* <MenuIcon /> */}
         </div>
-        <div id="navBar-middle" className="flex basis-1/3 items-center">
+        <div id="navBar-middle" className="navBarBlock">
           <SearchBar />
         </div>
-        <div
-          id="navBar-right"
-          className="flex basis-1/3 justify-end pr-10 items-center"
-        >
+        <div id="navBar-right" className="navBarBlock justify-end pr-10">
           <Dropdown />
         </div>
       </header>
-      <main className="flex flex-row">
+      <main className="flex flex-row pt-20">
         <div
           id="cardSection"
           className="basis-3/4 bg-gray-900 py-10 px-60 border-r-2 border-slate-500"
