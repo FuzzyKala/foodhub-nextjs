@@ -1,0 +1,11 @@
+@layer PageLink {
+  .pageLink {
+    @apply rounded-lg flex px-3 py-2 mr-2 mb-2;
+  }
+  .activeLink {
+    @apply pageLink bg-slate-700 bg-opacity-80;
+  }
+  .inactiveLink {
+    @apply bg-transparent hover:bg-gray-700 hover:bg-opacity-40;
+  }
+}
