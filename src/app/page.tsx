@@ -27,7 +27,7 @@ export default function HomePage() {
       <main className="flex flex-row pt-20">
         <div
           id="cardSection"
-          className="basis-3/4 py-10 px-60 border-r-2 border-slate-500"
+          className="w-3/4 py-10 px-60 border-r-2 border-slate-500"
         >
           <Card />
           <DivideLine />
@@ -36,7 +36,10 @@ export default function HomePage() {
           <Card />
           <DivideLine />
         </div>
-        <div id="sideBar" className="basis-1/4 bg-gray-900 p-10 text-xl">
+        <div
+          id="sideBar"
+          className={`w-1/4 bg-gray-900 p-10 text-xl fixedSideBar`}
+        >
           <PageLink />
         </div>
       </main>

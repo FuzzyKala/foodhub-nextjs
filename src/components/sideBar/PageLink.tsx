@@ -1,4 +1,4 @@
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import PageLinkItem from "./PageLinkItem";
 import { IoHomeOutline, IoStarOutline, IoPeopleOutline } from "react-icons/io5"; // Import icons
