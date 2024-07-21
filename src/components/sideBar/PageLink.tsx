@@ -1,4 +1,4 @@
-export default function PageLink() {
+export default function PageLink({ currentPage }: { currentPage: string }) {
   return (
     <div>
       <div

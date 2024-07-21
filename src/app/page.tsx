@@ -1,6 +1,8 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+// import { useRouter } from "next/navigation";
+
 import Logo from "@/components/navBar/Logo";
 import SearchBar from "@/components/navBar/SearchBar";
 import Dropdown from "@/components/navBar/Dropdown";
@@ -11,9 +13,8 @@ import DivideLine from "@/components/postCard/DivideLine";
 import PageLink from "@/components/sideBar/PageLink";
 
 export default function Home() {
-  const router = useRouter();
-  const currentPage = router.pathname;
-  console.log("Current page:", currentPage);
+  const pathname = usePathname();
+  console.log("Current page:", pathname);
   return (
     <div>
       <header id="navBar">
@@ -41,7 +42,7 @@ export default function Home() {
           <DivideLine />
         </div>
         <div id="sideBar" className="basis-1/4 bg-gray-900 p-10 text-xl">
-          <PageLink currentPage={currentPage} />
+          <PageLink currentPage={pathname} />
         </div>
       </main>
     </div>
