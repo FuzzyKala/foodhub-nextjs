@@ -9,7 +9,7 @@ import DivideLine from "@/components/postCard/DivideLine";
 
 import PageLink from "@/components/sideBar/PageLink";
 
-export default function HomePage() {
+export default function FollowingPage() {
   return (
     <div>
       <header id="navBar">

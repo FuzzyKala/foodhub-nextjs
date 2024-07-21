@@ -1,4 +1,4 @@
-import styles from "@/components/sideBar/pageLink.module.css";
+import styles from "@/components/sideBar/PageLinkItem.module.css";
 import { useRouter } from "next/navigation";
 
 interface Link {

@@ -1,5 +1,5 @@
 import { useRouter, usePathname } from "next/navigation";
-import styles from "@/components/sideBar/pageLink.module.css";
+
 import PageLinkItem from "./PageLinkItem";
 
 interface Link {
@@ -8,12 +8,11 @@ interface Link {
 }
 const links: Link[] = [
   { href: "/", label: "Home" },
-  { href: "/popular", label: "Popular" },
+  { href: "/trending", label: "Trending" },
   { href: "/following", label: "Following" },
 ];
 
 export default function PageLink() {
-  const router = useRouter();
   const currentPage = usePathname();
   console.log("Current page:", currentPage);
 
