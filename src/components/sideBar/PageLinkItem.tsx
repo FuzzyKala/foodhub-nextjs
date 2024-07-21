@@ -1,9 +1,11 @@
 import styles from "@/components/sideBar/PageLinkItem.module.css";
 import { useRouter } from "next/navigation";
+import { ReactNode } from "react";
 
 interface Link {
   href: string;
   label: string;
+  icon: ReactNode;
 }
 interface PageLinkItemProps {
   currentPage: string;
@@ -24,7 +26,10 @@ export default function PageLinkItem({ currentPage, link }: PageLinkItemProps) {
       aria-label={`Navigate to ${link.label}`}
       tabIndex={0}
     >
-      <p className="py-1 px-2">{link.label}</p>
+      <div className="p-2">{link.icon}</div>
+      <div className="p-2">
+        <p className="">{link.label}</p>
+      </div>
     </div>
   );
 }
