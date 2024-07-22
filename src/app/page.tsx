@@ -3,6 +3,7 @@
 import Logo from "@/components/navBar/Logo";
 import SearchBar from "@/components/navBar/SearchBar";
 import Dropdown from "@/components/navBar/Dropdown";
+import LoginBtn from "@/components/navBar/LoginBtn";
 
 import Card from "@/components/postCard/Card";
 import DivideLine from "@/components/postCard/DivideLine";
@@ -21,6 +22,7 @@ export default function HomePage() {
           <SearchBar />
         </div>
         <div id="navBar-right" className="navBarBlock justify-end pr-10">
+          <LoginBtn />
           <Dropdown />
         </div>
       </header>
