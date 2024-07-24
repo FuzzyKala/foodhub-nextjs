@@ -1,7 +1,11 @@
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import PageLinkItem from "./PageLinkItem";
-import { IoHomeOutline, IoStarOutline, IoPeopleOutline } from "react-icons/io5"; // Import icons
+import {
+  IoHomeOutline,
+  IoStarOutline,
+  IoTrendingUpSharp,
+} from "react-icons/io5";
 
 interface Link {
   href: string;
@@ -10,11 +14,15 @@ interface Link {
 }
 const links: Link[] = [
   { href: "/", label: "Home", icon: <IoHomeOutline size={24} /> },
-  { href: "/trending", label: "Trending", icon: <IoStarOutline size={24} /> },
+  {
+    href: "/trending",
+    label: "Trending",
+    icon: <IoTrendingUpSharp size={24} />,
+  },
   {
     href: "/following",
     label: "Following",
-    icon: <IoPeopleOutline size={24} />,
+    icon: <IoStarOutline size={24} />,
   },
 ];
 

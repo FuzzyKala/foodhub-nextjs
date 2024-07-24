@@ -1,7 +1,7 @@
 @layer Dropdown {
   .dropdown {
     @apply absolute right-4 w-36 bg-gray-300 border border-gray-400 rounded-md text-gray-800 
-    invisible transform -translate-y-5 transition-transform duration-100 ease-linear;
+    invisible transform -translate-y-5 transition-transform duration-100 ease-linear z-30;
   }
   .dropdownOpen {
     @apply visible transform-none;

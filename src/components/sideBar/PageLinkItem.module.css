@@ -1,6 +1,6 @@
 @layer PageLink {
   .pageLink {
-    @apply rounded-lg flex p-3 mr-2 mb-2;
+    @apply rounded-lg flex p-3 mr-2 mb-2 place-items-center;
   }
   .activeLink {
     @apply pageLink bg-slate-700 bg-opacity-80;
