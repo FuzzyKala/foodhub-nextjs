@@ -12,9 +12,6 @@ export default function Dropdown() {
       !dropdownRef.current.contains(e.target as Node)
     ) {
       setDropdownOpen(false);
-      // console.log("log current:", dropdownRef.current);
-      // console.log("e:", e);
-      // console.log("e.target:", e.target);
     }
   };
   useEffect(() => {
@@ -30,7 +27,12 @@ export default function Dropdown() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div id="userIcon" className="flex m-3" onClick={toggleDropdown}>
+      <div
+        id="userIcon"
+        className="flex m-3"
+        onClick={toggleDropdown}
+        role="button"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

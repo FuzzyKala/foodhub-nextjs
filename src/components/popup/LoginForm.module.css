@@ -1,0 +1,21 @@
+@layer LoginForm {
+  /* .loginFormContainer {
+    @apply visible;
+  } */
+  .loginFormContainerOpen {
+    @apply invisible;
+  }
+  .loginForm {
+    @apply fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/4 w-2/5 bg-gray-300 border border-gray-400 rounded-md text-gray-800 items-center py-5;
+  }
+
+  .overlay {
+    @apply fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm;
+  }
+  .inputContainer {
+    @apply mb-7;
+  }
+  .inputBlock {
+    @apply border-slate-400 border rounded-md h-10 w-96 px-2;
+  }
+}
