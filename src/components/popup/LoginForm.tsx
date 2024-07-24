@@ -10,8 +10,8 @@ export default function LoginForm({
   setLoginFormOpen,
 }: LoginFormProps) {
   const loginFormRef = useRef<HTMLDivElement>(null);
-  console.log("loginFormRef:", loginFormRef);
-  console.log("loginFormOpen", loginFormOpen);
+  // console.log("loginFormRef:", loginFormRef);
+  // console.log("loginFormOpen", loginFormOpen);
   const handleClickOutsideOfForm = (e: MouseEvent) => {
     if (
       loginFormRef.current &&

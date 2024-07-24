@@ -34,7 +34,7 @@ export default function Dropdown() {
         onClick={toggleDropdown}
         role="button"
       >
-        <LuUserCircle2 size={40} stroke-width={1.5} />
+        <LuUserCircle2 size={40} strokeWidth={1.5} />
       </div>
       <div
         id="dropdownTable"
