@@ -3,8 +3,14 @@ import { PiArrowFatUp, PiArrowFatDown } from "react-icons/pi";
 import { LuUserCircle2 } from "react-icons/lu";
 import { BiComment } from "react-icons/bi";
 import styles from "@/components/postCard/Card.module.css";
+import Carousel from "@/components/postCard/Carousel";
 
 export default function Card() {
+  const images = [
+    "/dummy_food_1.jpg",
+    "/dummy_food_2.webp",
+    "/dummy_food_3.jpg",
+  ];
   return (
     <div>
       <div
@@ -48,15 +54,31 @@ export default function Card() {
             </h1>
           </div>
           <div id="content" className="justify-items-center">
-            <div id="imagesContainer" className="my-2">
-              <Image
+            <div
+              id="imagesContainer"
+              className="flex m-2 overflow-x-auto whitespace-nowrap justify-center rounded-md border-2  border-slate-300 border-opacity-10"
+            >
+              {/* <Image
                 src="/dummy_food.jpg"
                 alt="dummy image"
                 width={800}
                 height={600}
                 style={{ width: "100%", height: "auto" }}
                 className="rounded-xl"
-              />
+              /> */}
+              {/* {images.map((imageSrc, index) => (
+                <div key={index} className="inline-block">
+                  <Image
+                    src={`${imageSrc}`}
+                    alt={`Image${index}`}
+                    width={800}
+                    height={600}
+                    style={{ width: "100%", height: "auto" }}
+                    className="rounded-xl"
+                  />
+                </div>
+              ))} */}
+              <Carousel images={images} />
             </div>
             <div id="textContainer">
               <p>
