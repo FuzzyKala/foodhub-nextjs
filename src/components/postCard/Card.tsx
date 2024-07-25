@@ -56,7 +56,7 @@ export default function Card() {
           <div id="content" className="justify-items-center">
             <div
               id="imagesContainer"
-              className="flex m-2 overflow-x-auto whitespace-nowrap justify-center rounded-md border-2  border-slate-300 border-opacity-10"
+              className="flex m-1 overflow-auto rounded-md border-2 border-slate-300 border-opacity-10"
             >
               {/* <Image
                 src="/dummy_food.jpg"
@@ -66,21 +66,11 @@ export default function Card() {
                 style={{ width: "100%", height: "auto" }}
                 className="rounded-xl"
               /> */}
-              {/* {images.map((imageSrc, index) => (
-                <div key={index} className="inline-block">
-                  <Image
-                    src={`${imageSrc}`}
-                    alt={`Image${index}`}
-                    width={800}
-                    height={600}
-                    style={{ width: "100%", height: "auto" }}
-                    className="rounded-xl"
-                  />
-                </div>
-              ))} */}
+              {/* <div className="relative w-full h-96"></div> */}
+
               <Carousel images={images} />
             </div>
-            <div id="textContainer">
+            <div id="textContainer" className="m-2">
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
