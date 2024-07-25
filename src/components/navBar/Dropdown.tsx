@@ -28,14 +28,14 @@ export default function Dropdown() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div
+      <button
         id="userIcon"
         className="flex m-3"
         onClick={toggleDropdown}
         role="button"
       >
         <LuUserCircle2 size={40} strokeWidth={1.5} />
-      </div>
+      </button>
       <div
         id="dropdownTable"
         className={`${styles.dropdown} ${
