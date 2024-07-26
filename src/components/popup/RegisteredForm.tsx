@@ -1,31 +1,37 @@
-import styles from "./LoginForm.module.css";
-import { useState, useRef, useEffect } from "react";
+import styles from "./RegisteredForm.module.css";
+import { useState, useRef, useEffect, use } from "react";
 
 interface registerFormProps {
-  loginFormOpen: boolean;
-  setLoginFormOpen: Function;
+  registeredFormOpen: boolean;
+  setRegisteredFormOpen: Function;
 }
-export default function LoginForm({
-  loginFormOpen,
-  setLoginFormOpen,
+export default function RegisteredForm({
+  registeredFormOpen,
+  setRegisteredFormOpen,
 }: registerFormProps) {
-  const loginFormRef = useRef<HTMLDivElement>(null);
-
+  const registeredFormRef = useRef<HTMLDivElement>(null);
+  console.log("registeredFormRef.current", registeredFormRef.current);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [currentTab, setCurrentTab] = useState("regTab");
+  const regTabBtnRef = useRef(null);
+  const loginTabBtnRef = useRef(null);
 
   // close register form after click outside of form.
   const handleClickOutsideOfForm = (e: MouseEvent) => {
     if (
-      loginFormRef.current &&
-      !loginFormRef.current.contains(e.target as Node)
+      registeredFormRef.current &&
+      !registeredFormRef.current.contains(e.target as Node)
     ) {
-      setLoginFormOpen(false);
+      setRegisteredFormOpen(false);
+    } else {
+      console.log("registeredFormRef.current", registeredFormRef.current);
     }
   };
 
   // collect logi information and send it to the server
-  const handleLoginSubmit = async (e: React.FormEvent) => {
+  const handleRegSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await fetch("/api/submitForm", {
       method: "POST",
@@ -37,8 +43,17 @@ export default function LoginForm({
     const result = await res.json();
     console.log(result);
   };
+
+  const switchTab = () => {
+    // if (currentTab == "regTab" && loginTabBtnRef.current) {
+    // }
+    console.log("regTabBtnRef.current", regTabBtnRef.current.className);
+    console.log("loginTabBtnRef.current", loginTabBtnRef.current.className);
+  };
+  useEffect(() => {});
+
   useEffect(() => {
-    if (loginFormOpen) {
+    if (registeredFormOpen) {
       document.addEventListener("mousedown", handleClickOutsideOfForm);
     } else {
       document.removeEventListener("mousedown", handleClickOutsideOfForm);
@@ -47,23 +62,45 @@ export default function LoginForm({
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideOfForm);
     };
-  }, [loginFormOpen]);
+  }, [registeredFormOpen]);
 
   return (
-    <div className={`${loginFormOpen ? "visible" : "invisible"}`}>
+    <div className={`${registeredFormOpen ? "visible" : "invisible"}`}>
       <div className={styles.overlay}>
-        <div id="loginForm" className={styles.loginForm} ref={loginFormRef}>
+        <div
+          id="registeredForm"
+          className={styles.registeredForm}
+          ref={registeredFormRef}
+        >
+          <div
+            id="switchTabContainer"
+            className="text-gray-800 items-center z-60 justify-between border-b-2 border-black grid grid-cols-2 p-3 mb-3"
+          >
+            <button
+              // id="regTabBtn"
+              className="text-center text-2xl font-semibold border-r-2 border-gray-900"
+              onClick={switchTab}
+              ref={regTabBtnRef}
+            >
+              Registered
+            </button>
+            <button
+              // id="loginTabBtn"
+              className="text-center text-2xl font-thin"
+              onClick={switchTab}
+              ref={loginTabBtnRef}
+            >
+              Login
+            </button>
+          </div>
           <h2 className="text-3xl font-semibold mb-8 text-center">
             Register an account
           </h2>
           <form
             className="grid justify-items-center"
-            onSubmit={handleLoginSubmit}
+            onSubmit={handleRegSubmit}
           >
-            <div
-              id="loginEmailContainer"
-              className={`${styles.inputContainer}`}
-            >
+            <div id="regEmailContainer" className={`${styles.inputContainer}`}>
               <div className="mb-1">
                 <label htmlFor="emailInput" className="font-semibold">
                   Email address
@@ -72,7 +109,7 @@ export default function LoginForm({
 
               <div>
                 <input
-                  id="loginEmailInput"
+                  id="regEmailInput"
                   type="email"
                   autoComplete="email"
                   value={email}
@@ -83,7 +120,7 @@ export default function LoginForm({
               </div>
             </div>
             <div
-              id="loginPasswordContainer"
+              id="regPasswordContainer"
               className={`${styles.inputContainer}`}
             >
               <div className="flex justify-between mb-1">
@@ -96,7 +133,7 @@ export default function LoginForm({
               </div>
               <div>
                 <input
-                  id="loginPasswordInput"
+                  id="regPasswordInput"
                   type="password"
                   autoComplete="current-password"
                   value={password}
@@ -107,7 +144,7 @@ export default function LoginForm({
               </div>
             </div>
             <div
-              id="loginFormSubmit"
+              id="registeredFormSubmit"
               className={`${styles.inputContainer} mt-5`}
             >
               <button

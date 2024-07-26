@@ -28,7 +28,12 @@ export default function Carousel({ images }: CarouselProps) {
       >
         {images.map((image, index) => (
           <div key={index} className="flex-shrink-0 w-full h-96 relative ">
-            <Image alt={`image ${index}`} src={image} fill objectFit="cover" />
+            <Image
+              alt={`image ${index}`}
+              src={image}
+              fill
+              style={{ objectFit: "cover" }}
+            />
           </div>
         ))}
       </div>

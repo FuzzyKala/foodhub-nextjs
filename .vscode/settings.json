@@ -1,0 +1,18 @@
+{
+  "sqltools.connections": [
+    {
+      "pgOptions": {
+        "ssl": {
+          "rejectUnauthorized": true
+        }
+      },
+      "previewLimit": 50,
+      "server": "ep-black-feather-a2sdg4yw-pooler.eu-central-1.aws.neon.tech",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Vercel PostgreSQL",
+      "database": "verceldb",
+      "username": "default"
+    }
+  ]
+}
