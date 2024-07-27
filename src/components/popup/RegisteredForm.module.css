@@ -12,7 +12,7 @@
     @apply border-slate-400 border rounded-md h-10 w-96 px-2;
   }
   .activeForm {
-    @apply text-center text-2xl font-semibold border-r-2 border-gray-900;
+    @apply text-center text-2xl font-semibold;
   }
   .inactiveForm {
     @apply text-center text-2xl font-thin;

@@ -1,6 +1,6 @@
 @layer LoginForm {
   .activeForm {
-    @apply text-center text-2xl font-semibold border-r-2 border-gray-900;
+    @apply text-center text-2xl font-semibold;
   }
   .inactiveForm {
     @apply text-center text-2xl font-thin;

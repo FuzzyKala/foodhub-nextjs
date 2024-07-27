@@ -1,9 +1,10 @@
 import RegisteredForm from "../popup/RegisteredForm";
+import FormControl from "@/components/popup/FormControl";
 import { useState } from "react";
 
 export default function LoginBtn() {
-  const [registeredFormOpen, setRegisteredFormOpen] = useState(false);
-  const toggleLoginForm = () => setRegisteredFormOpen(!registeredFormOpen);
+  const [FormOpen, setFormOpen] = useState(false);
+  const toggleLoginForm = () => setFormOpen(!FormOpen);
 
   return (
     <div>
@@ -14,10 +15,11 @@ export default function LoginBtn() {
       >
         Login
       </button>
-      <RegisteredForm
+      {/* <RegisteredForm
         registeredFormOpen={registeredFormOpen}
         setRegisteredFormOpen={setRegisteredFormOpen}
-      />
+      /> */}
+      <FormControl FormOpen={FormOpen} setFormOpen={setFormOpen} />
     </div>
   );
 }
