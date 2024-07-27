@@ -8,14 +8,19 @@ interface FormProps {
 
 export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
   const formRef = useRef<HTMLDivElement>(null);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const [currentTab, setCurrentTab] = useState("regTab");
   const regTabBtnRef = useRef<HTMLButtonElement>(null);
   const loginTabBtnRef = useRef<HTMLButtonElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const forgetPasswordRef = useRef<HTMLAnchorElement>(null);
+  const submitBtnRef = useRef<HTMLButtonElement>(null);
 
   const handleTabClick = (tab: string) => {
     setCurrentTab(tab);
@@ -24,25 +29,62 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
       regTabBtnRef.current!.className = styles.activeForm;
       loginTabBtnRef.current!.className = styles.inactiveForm;
       forgetPasswordRef.current!.classList.add("invisible");
+      // submitBtnRef.current!.innerHTML = "Register";
     } else {
       titleRef.current!.innerHTML = "Login to your account";
       regTabBtnRef.current!.className = styles.inactiveForm;
       loginTabBtnRef.current!.className = styles.activeForm;
       forgetPasswordRef.current!.classList.remove("invisible");
+      // submitBtnRef.current!.innerHTML = "Login";
     }
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("/api/submitForm", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const result = await res.json();
-    console.log(result);
+    setFeedbackMessage("");
+
+    if (currentTab == "regTab") {
+      try {
+        const Response = await fetch("/api/users/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+        if (Response.ok) {
+          setIsSuccess(true);
+          setFeedbackMessage("Registration successful!");
+        } else {
+          setIsSuccess(false);
+          const error = await Response.json();
+          setFeedbackMessage(`Error: ${error.message}`);
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        setIsSuccess(false);
+        setFeedbackMessage("An error occurred. Please try again.");
+      }
+    } else {
+      try {
+        const Response = await fetch("/api/users/login", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (Response.ok) {
+          const result = await Response.json();
+          console.log(result);
+        } else {
+          setFeedbackMessage("Login failed.");
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        setFeedbackMessage("An error occurred. Please try again.");
+      }
+    }
   };
 
   useEffect(() => {
@@ -149,11 +191,19 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
               <button
                 className="border-slate-400 border rounded-md h-10 w-96 px-2 bg-gray-900 text-white font-semibold"
                 type="submit"
+                ref={submitBtnRef}
               >
-                Register
+                {currentTab === "regTab" ? "Register" : "Login"}
               </button>
             </div>
           </form>
+          {feedbackMessage && (
+            <div
+              className={`feedback-message ${isSuccess ? "success" : "error"}`}
+            >
+              {feedbackMessage}
+            </div>
+          )}
         </div>
       </div>
     </div>
