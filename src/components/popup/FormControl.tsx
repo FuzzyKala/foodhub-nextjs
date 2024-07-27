@@ -1,7 +1,4 @@
 import styles from "@/components/popup/FormControl.module.css";
-import RegisteredForm from "@/components/popup/RegisteredForm";
-import LoginForm from "@/components/popup/LoginForm";
-
 import { useEffect, useState, useRef } from "react";
 
 interface FormProps {
@@ -10,35 +7,50 @@ interface FormProps {
 }
 
 export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
-  const registeredFormRef = useRef<HTMLDivElement>(null);
-  // close register form after click outside of form.
-  const handleClickOutsideOfForm = (e: MouseEvent) => {
-    const registeredForm = registeredFormRef.current;
-    const currentClickedDOM = e.target as HTMLElement;
+  const formRef = useRef<HTMLDivElement>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    if (registeredForm && !registeredForm.contains(currentClickedDOM as Node)) {
-      setFormOpen(false);
+  const [currentTab, setCurrentTab] = useState("regTab");
+  const regTabBtnRef = useRef<HTMLButtonElement>(null);
+  const loginTabBtnRef = useRef<HTMLButtonElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const forgetPasswordRef = useRef<HTMLAnchorElement>(null);
+
+  const handleTabClick = (tab: string) => {
+    setCurrentTab(tab);
+    if (tab === "regTab") {
+      titleRef.current!.innerHTML = "Register an account";
+      regTabBtnRef.current!.className = styles.activeForm;
+      loginTabBtnRef.current!.className = styles.inactiveForm;
+      forgetPasswordRef.current!.classList.add("invisible");
     } else {
-      if (
-        currentClickedDOM.id === "regTabBtn" &&
-        regTabBtnRef.current &&
-        loginTabBtnRef.current
-      ) {
-        regTabBtnRef.current.className = styles.activeForm;
-        loginTabBtnRef.current.className = styles.inactiveForm;
-      }
-      if (
-        currentClickedDOM.id === "loginTabBtn" &&
-        regTabBtnRef.current &&
-        loginTabBtnRef.current
-      ) {
-        loginTabBtnRef.current.className = styles.activeForm;
-        regTabBtnRef.current.className = styles.inactiveForm;
-      }
+      titleRef.current!.innerHTML = "Login to your account";
+      regTabBtnRef.current!.className = styles.inactiveForm;
+      loginTabBtnRef.current!.className = styles.activeForm;
+      forgetPasswordRef.current!.classList.remove("invisible");
     }
   };
 
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await fetch("/api/submitForm", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const result = await res.json();
+    console.log(result);
+  };
+
   useEffect(() => {
+    const handleClickOutsideOfForm = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        setFormOpen(false);
+      }
+    };
     if (FormOpen) {
       document.addEventListener("mousedown", handleClickOutsideOfForm);
     } else {
@@ -48,14 +60,102 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideOfForm);
     };
-  }, [FormOpen]);
+  }, [FormOpen, setFormOpen]);
+
+  // Control the visibility of "Forget password?"
+  useEffect(() => {
+    if (FormOpen && currentTab === "loginTab") {
+      forgetPasswordRef.current!.classList.remove("invisible");
+    } else {
+      forgetPasswordRef.current!.classList.add("invisible");
+    }
+  }, [FormOpen, currentTab]);
 
   return (
     <div className={`${FormOpen ? "visible" : "invisible"}`}>
-      <RegisteredForm
-        registeredFormRef={registeredFormRef}
-        FormOpen={FormOpen}
-      />
+      <div className={styles.overlay}>
+        <div id="form" className={styles.form} ref={formRef}>
+          <div
+            id="switchTabContainer"
+            className="text-gray-800 items-center z-60 justify-between border-b-2 border-gray-900 grid grid-cols-2 p-3 mb-3"
+          >
+            <button
+              id="regTabBtn"
+              className="text-center text-2xl font-semibold"
+              ref={regTabBtnRef}
+              onClick={() => handleTabClick("regTab")}
+            >
+              Registered
+            </button>
+            <div className="absolute rounded border border-gray-900 h-10 top-2 left-1/2"></div>
+            <button
+              id="loginTabBtn"
+              className="text-center text-2xl font-thin"
+              ref={loginTabBtnRef}
+              onClick={() => handleTabClick("loginTab")}
+            >
+              Login
+            </button>
+          </div>
+          <h2
+            className="text-3xl font-semibold mb-8 text-center"
+            ref={titleRef}
+          >
+            Register an account
+          </h2>
+          <form
+            className="grid justify-items-center"
+            onSubmit={handleFormSubmit}
+          >
+            <div className={`${styles.inputContainer}`}>
+              <label htmlFor="emailInput" className="font-semibold mb-1 block">
+                Email address
+              </label>
+              <input
+                id="regEmailInput"
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className={styles.inputBlock}
+              />
+            </div>
+            <div className={`${styles.inputContainer}`}>
+              <label
+                htmlFor="passwordInput"
+                className="font-semibold flex justify-between mb-1"
+              >
+                Password
+                <a
+                  href="/passwordrecover"
+                  className="font-semibold invisible"
+                  ref={forgetPasswordRef}
+                >
+                  Forget password?
+                </a>
+              </label>
+              <input
+                id="regPasswordInput"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className={styles.inputBlock}
+              />
+            </div>
+            <div className={`${styles.inputContainer} mt-5`}>
+              <button
+                className="border-slate-400 border rounded-md h-10 w-96 px-2 bg-gray-900 text-white font-semibold"
+                type="submit"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
