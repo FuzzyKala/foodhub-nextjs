@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 
 interface FormProps {
   FormOpen: boolean;
-  setFormOpen: Function;
+  setFormOpen: (open: boolean) => void;
 }
 
 export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
@@ -11,6 +11,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState("");
 
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -21,6 +22,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const forgetPasswordRef = useRef<HTMLAnchorElement>(null);
   const submitBtnRef = useRef<HTMLButtonElement>(null);
+  const passwordStrengthRef = useRef<HTMLParagraphElement>(null);
 
   const handleTabClick = (tab: string) => {
     setCurrentTab(tab);
@@ -29,11 +31,13 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
       regTabBtnRef.current!.className = styles.activeForm;
       loginTabBtnRef.current!.className = styles.inactiveForm;
       forgetPasswordRef.current!.classList.add("invisible");
+      submitBtnRef.current!.innerHTML = "Register";
     } else {
       titleRef.current!.innerHTML = "Login to your account";
       regTabBtnRef.current!.className = styles.inactiveForm;
       loginTabBtnRef.current!.className = styles.activeForm;
       forgetPasswordRef.current!.classList.remove("invisible");
+      submitBtnRef.current!.innerHTML = "Login";
     }
   };
 
@@ -44,9 +48,10 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
       setFeedbackMessage("Email and password are required.");
       return false;
     }
-    if (!email.includes("@")) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
       setIsSuccess(false);
-      setFeedbackMessage("Invalide Email address format.");
+      setFeedbackMessage("Invalid Email address format.");
       return false;
     }
     if (password.length < 6) {
@@ -57,9 +62,44 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     return true;
   };
 
+  const passwordStrengthVerify = (password: string) => {
+    const specialChars = "!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?";
+    const weakRegex = /^[0-9]+$|^[A-Za-z]+$/; // Only numbers or alphabets
+    const goodRegex = /^(?=.*[0-9])(?=.*[A-Za-z])[A-Za-z0-9]+$/; // Numbers and alphabets
+    const strongRegex = new RegExp(
+      `^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[${specialChars}])[A-Za-z0-9${specialChars}]+$`
+    );
+    const numbersAndSpecialCharsRegex = new RegExp(
+      `^(?=.*[0-9])(?=.*[${specialChars}])[0-9${specialChars}]+$`
+    );
+
+    if (strongRegex.test(password)) {
+      setPasswordStrength("Strong");
+    } else if (goodRegex.test(password)) {
+      setPasswordStrength("Good");
+    } else if (numbersAndSpecialCharsRegex.test(password)) {
+      setPasswordStrength("Good");
+    } else if (weakRegex.test(password)) {
+      setPasswordStrength("Weak");
+    } else {
+      setPasswordStrength("");
+    }
+  };
+
+  // Update and display passwordStrength as the password on changeing
+  useEffect(() => {
+    passwordStrengthVerify(password);
+    if (password && currentTab == "regTab") {
+      passwordStrengthRef.current!.classList.remove("invisible");
+    } else {
+      passwordStrengthRef.current!.classList.add("invisible");
+    }
+  }, [password, currentTab]);
+
   // handle submitting login and registered info
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setFeedbackMessage("");
 
     if (!validateForm()) {
@@ -109,7 +149,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     }
   };
 
-  // Add eventlistener to close the form
+  // Add an eventlistener to close the form
   useEffect(() => {
     const handleClickOutsideOfForm = (e: MouseEvent) => {
       if (formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -120,6 +160,8 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
       document.addEventListener("mousedown", handleClickOutsideOfForm);
     } else {
       document.removeEventListener("mousedown", handleClickOutsideOfForm);
+      setPassword("");
+      setEmail("");
     }
 
     return () => {
@@ -209,6 +251,9 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
                 placeholder="Password"
                 className={styles.inputBlock}
               />
+              <p ref={passwordStrengthRef}>
+                Password Strength: {passwordStrength}
+              </p>
             </div>
             <div className={`${styles.inputContainer} mt-5`}>
               <button
@@ -216,7 +261,8 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
                 type="submit"
                 ref={submitBtnRef}
               >
-                {currentTab === "regTab" ? "Register" : "Login"}
+                Register
+                {/* {currentTab === "regTab" ? "Register" : "Login"} */}
               </button>
             </div>
           </form>
