@@ -29,20 +29,42 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
       regTabBtnRef.current!.className = styles.activeForm;
       loginTabBtnRef.current!.className = styles.inactiveForm;
       forgetPasswordRef.current!.classList.add("invisible");
-      // submitBtnRef.current!.innerHTML = "Register";
     } else {
       titleRef.current!.innerHTML = "Login to your account";
       regTabBtnRef.current!.className = styles.inactiveForm;
       loginTabBtnRef.current!.className = styles.activeForm;
       forgetPasswordRef.current!.classList.remove("invisible");
-      // submitBtnRef.current!.innerHTML = "Login";
     }
   };
 
+  // Register info validation
+  const validateForm = (): boolean => {
+    if (!email || !password) {
+      setIsSuccess(false);
+      setFeedbackMessage("Email and password are required.");
+      return false;
+    }
+    if (!email.includes("@")) {
+      setIsSuccess(false);
+      setFeedbackMessage("Invalide Email address format.");
+      return false;
+    }
+    if (password.length < 6) {
+      setIsSuccess(false);
+      setFeedbackMessage("Password must be at least 6 characters long.");
+      return false;
+    }
+    return true;
+  };
+
+  // handle submitting login and registered info
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFeedbackMessage("");
 
+    if (!validateForm()) {
+      return;
+    }
     if (currentTab == "regTab") {
       try {
         const Response = await fetch("/api/users/register", {
@@ -87,6 +109,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     }
   };
 
+  // Add eventlistener to close the form
   useEffect(() => {
     const handleClickOutsideOfForm = (e: MouseEvent) => {
       if (formRef.current && !formRef.current.contains(e.target as Node)) {
@@ -199,7 +222,11 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
           </form>
           {feedbackMessage && (
             <div
-              className={`feedback-message ${isSuccess ? "success" : "error"}`}
+              className={`mt-4 p-4 rounded text-center font-bold ${
+                isSuccess
+                  ? "text-green-500 border-t border-b border-green-500"
+                  : "text-red-500 border-t border-b border-red-500"
+              }`}
             >
               {feedbackMessage}
             </div>
