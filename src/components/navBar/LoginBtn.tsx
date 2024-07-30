@@ -1,5 +1,5 @@
 // import RegisteredForm from "../popup/RegisteredForm";
-import FormControl from "@/components/popup/FormControl";
+import FormControl from "@/components/form/FormControl";
 import { useState } from "react";
 
 export default function LoginBtn() {

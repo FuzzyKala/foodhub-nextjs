@@ -1,4 +1,4 @@
-import styles from "@/components/popup/FormControl.module.css";
+import styles from "@/components/form/FormControl.module.css";
 import { useEffect, useState, useRef } from "react";
 
 interface FormProps {
@@ -86,7 +86,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     }
   };
 
-  // Update and display passwordStrength as the password on changeing
+  // Update and display passwordStrength when the password on changeing
   useEffect(() => {
     passwordStrengthVerify(password);
     if (password && currentTab == "regTab") {
