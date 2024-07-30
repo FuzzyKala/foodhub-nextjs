@@ -1,6 +1,8 @@
 import styles from "@/components/form/FormControl.module.css";
 import { useEffect, useState, useRef } from "react";
-
+import getPasswordStrength from "@/utils/passwordStrength";
+import TabButtons from "@/components/form/TabButtons";
+import FormFields from "@/components//form/FormFields";
 interface FormProps {
   FormOpen: boolean;
   setFormOpen: (open: boolean) => void;
@@ -17,6 +19,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const [currentTab, setCurrentTab] = useState("regTab");
+
   const regTabBtnRef = useRef<HTMLButtonElement>(null);
   const loginTabBtnRef = useRef<HTMLButtonElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -62,33 +65,9 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     return true;
   };
 
-  const passwordStrengthVerify = (password: string) => {
-    const specialChars = "!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?";
-    const weakRegex = /^[0-9]+$|^[A-Za-z]+$/; // Only numbers or alphabets
-    const goodRegex = /^(?=.*[0-9])(?=.*[A-Za-z])[A-Za-z0-9]+$/; // Numbers and alphabets
-    const strongRegex = new RegExp(
-      `^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[${specialChars}])[A-Za-z0-9${specialChars}]+$`
-    );
-    const numbersAndSpecialCharsRegex = new RegExp(
-      `^(?=.*[0-9])(?=.*[${specialChars}])[0-9${specialChars}]+$`
-    );
-
-    if (strongRegex.test(password)) {
-      setPasswordStrength("Strong");
-    } else if (goodRegex.test(password)) {
-      setPasswordStrength("Good");
-    } else if (numbersAndSpecialCharsRegex.test(password)) {
-      setPasswordStrength("Good");
-    } else if (weakRegex.test(password)) {
-      setPasswordStrength("Weak");
-    } else {
-      setPasswordStrength("");
-    }
-  };
-
   // Update and display passwordStrength when the password on changeing
   useEffect(() => {
-    passwordStrengthVerify(password);
+    setPasswordStrength(getPasswordStrength(password));
     if (password && currentTab == "regTab") {
       passwordStrengthRef.current!.classList.remove("invisible");
     } else {
@@ -98,6 +77,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
 
   // handle submitting login and registered info
   const handleFormSubmit = async (e: React.FormEvent) => {
+    // prevent page reload
     e.preventDefault();
 
     setFeedbackMessage("");
@@ -182,7 +162,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     <div className={`${FormOpen ? "visible" : "invisible"}`}>
       <div className={styles.overlay}>
         <div id="form" className={styles.form} ref={formRef}>
-          <div
+          {/* <div
             id="switchTabContainer"
             className="text-gray-800 items-center z-60 justify-between border-b-2 border-gray-900 grid grid-cols-2 p-3 mb-3"
           >
@@ -203,7 +183,13 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
             >
               Login
             </button>
-          </div>
+          </div> */}
+          <TabButtons
+            currentTab={currentTab}
+            handleTabClick={handleTabClick}
+            regTabBtnRef={regTabBtnRef}
+            loginTabBtnRef={loginTabBtnRef}
+          />
           <h2
             className="text-3xl font-semibold mb-8 text-center"
             ref={titleRef}
@@ -214,47 +200,15 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
             className="grid justify-items-center"
             onSubmit={handleFormSubmit}
           >
-            <div className={`${styles.inputContainer}`}>
-              <label htmlFor="emailInput" className="font-semibold mb-1 block">
-                Email address
-              </label>
-              <input
-                id="regEmailInput"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                className={styles.inputBlock}
-              />
-            </div>
-            <div className={`${styles.inputContainer}`}>
-              <label
-                htmlFor="passwordInput"
-                className="font-semibold flex justify-between mb-1"
-              >
-                Password
-                <a
-                  href="/passwordrecover"
-                  className="font-semibold invisible"
-                  ref={forgetPasswordRef}
-                >
-                  Forget password?
-                </a>
-              </label>
-              <input
-                id="regPasswordInput"
-                type="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className={styles.inputBlock}
-              />
-              <p ref={passwordStrengthRef}>
-                Password Strength: {passwordStrength}
-              </p>
-            </div>
+            <FormFields
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              passwordStrength={passwordStrength}
+              forgetPasswordRef={forgetPasswordRef}
+              passwordStrengthRef={passwordStrengthRef}
+            />
             <div className={`${styles.inputContainer} mt-5`}>
               <button
                 className="border-slate-400 border rounded-md h-10 w-96 px-2 bg-gray-900 text-white font-semibold"
