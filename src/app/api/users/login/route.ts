@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
+const bcrypt = require("bcrypt");
 
 // Handle login request
 export async function POST(req: NextRequest) {
@@ -8,15 +9,28 @@ export async function POST(req: NextRequest) {
 
   try {
     const result =
-      await sql`SELECT id FROM account WHERE email = ${email} AND password = ${password}`;
+      await sql`SELECT email, password FROM account WHERE email = ${email}`;
+
+    // if email were found
     if (result.rows.length > 0) {
-      return NextResponse.json({
-        message: "Login successfully.",
-        data: result.rows[0],
-      });
+      const hashedPassword = result.rows[0].password;
+      const isMatch = await bcrypt.compare(password, hashedPassword);
+
+      // if the password matched with the input
+      if (isMatch) {
+        return NextResponse.json({
+          message: "Login successfully.",
+        });
+      } else {
+        return NextResponse.json(
+          { message: "Incorrect password" },
+          { status: 401 }
+        );
+      }
+      // if email weren't found
     } else {
       return NextResponse.json(
-        { message: "Invalid email or password." },
+        { message: "Email can no be found." },
         { status: 401 }
       );
     }

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 const moment = require("moment");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 // Registering as an user
 export async function POST(req: NextRequest) {
   const data = await req.json();
@@ -8,7 +10,7 @@ export async function POST(req: NextRequest) {
 
   // Generate current timestamp
   const timestamp = moment().format();
-  // Try to insert user information
+
   try {
     // check if user's been registered already
     const checkUser =
@@ -19,9 +21,11 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-
+    const saltRounds = parseInt(process.env.SALT_ROUNDS || "10", 10);
+    const hashedPassword = await bcrypt.hash(password, Number(saltRounds));
+    // Try to insert user information
     const result =
-      await sql`INSERT INTO account (email, password, date) VALUES (${email}, ${password},${timestamp}) RETURNING *`;
+      await sql`INSERT INTO account (email, password, date) VALUES (${email}, ${hashedPassword},${timestamp}) RETURNING *`;
     return NextResponse.json({
       message: "Form submitted successfully!",
       data: result.rows[0],
