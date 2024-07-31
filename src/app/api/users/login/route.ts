@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 
-// Handle GET request
+// Handle login request
 export async function POST(req: NextRequest) {
   const data = await req.json();
   const { email, password } = data;

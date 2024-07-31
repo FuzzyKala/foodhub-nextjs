@@ -10,6 +10,16 @@ export async function POST(req: NextRequest) {
   const timestamp = moment().format();
   // Try to insert user information
   try {
+    // check if user's been registered already
+    const checkUser =
+      await sql`SELECT id FROM account WHERE email = (${email})`;
+    if (checkUser.rows.length > 0) {
+      return NextResponse.json(
+        { message: "Email is already registered." },
+        { status: 400 }
+      );
+    }
+
     const result =
       await sql`INSERT INTO account (email, password, date) VALUES (${email}, ${password},${timestamp}) RETURNING *`;
     return NextResponse.json({
