@@ -4,7 +4,6 @@ import { sql } from "@vercel/postgres";
 // Handle GET request
 export async function GET(req: NextRequest) {
   try {
-    const queryText = "";
     const result = await sql`SELECT id FROM account`;
     return NextResponse.json({
       message: "Data fetched successfully.",

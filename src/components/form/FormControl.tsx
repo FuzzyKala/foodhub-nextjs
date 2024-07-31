@@ -115,7 +115,6 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
             "Content-Type": "application/json",
           },
         });
-
         if (Response.ok) {
           const result = await Response.json();
           console.log(result);
