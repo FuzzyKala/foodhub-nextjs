@@ -85,46 +85,35 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     if (!validateForm()) {
       return;
     }
-    if (currentTab == "regTab") {
-      try {
-        const Response = await fetch("/api/users/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-        if (Response.ok) {
-          setIsSuccess(true);
-          setFeedbackMessage("Registration successful!");
-        } else {
-          setIsSuccess(false);
-          const error = await Response.json();
-          setFeedbackMessage(`Error: ${error.message}`);
-        }
-      } catch (error) {
-        console.error("Error submitting form:", error);
+
+    const endpoint = `/api/users/${
+      currentTab === "regTab" ? "register" : "login"
+    }`;
+
+    try {
+      const Response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      if (Response.ok) {
+        setIsSuccess(true);
+        setFeedbackMessage(
+          currentTab === "regTab"
+            ? "Registration successful!"
+            : "Login successful!"
+        );
+      } else {
         setIsSuccess(false);
-        setFeedbackMessage("An error occurred. Please try again.");
+        const error = await Response.json();
+        setFeedbackMessage(`Error: ${error.message}`);
       }
-    } else {
-      try {
-        const Response = await fetch("/api/users/login", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (Response.ok) {
-          const result = await Response.json();
-          console.log(result);
-        } else {
-          setFeedbackMessage("Login failed.");
-        }
-      } catch (error) {
-        console.error("Error submitting form:", error);
-        setFeedbackMessage("An error occurred. Please try again.");
-      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setIsSuccess(false);
+      setFeedbackMessage("An error occurred. Please try again.");
     }
   };
 
@@ -161,28 +150,6 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
     <div className={`${FormOpen ? "visible" : "invisible"}`}>
       <div className={styles.overlay}>
         <div id="form" className={styles.form} ref={formRef}>
-          {/* <div
-            id="switchTabContainer"
-            className="text-gray-800 items-center z-60 justify-between border-b-2 border-gray-900 grid grid-cols-2 p-3 mb-3"
-          >
-            <button
-              id="regTabBtn"
-              className="text-center text-2xl font-semibold"
-              ref={regTabBtnRef}
-              onClick={() => handleTabClick("regTab")}
-            >
-              Registered
-            </button>
-            <div className="absolute rounded border border-gray-900 h-10 top-2 left-1/2"></div>
-            <button
-              id="loginTabBtn"
-              className="text-center text-2xl font-thin"
-              ref={loginTabBtnRef}
-              onClick={() => handleTabClick("loginTab")}
-            >
-              Login
-            </button>
-          </div> */}
           <TabButtons
             currentTab={currentTab}
             handleTabClick={handleTabClick}
@@ -221,7 +188,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
           </form>
           {feedbackMessage && (
             <div
-              className={`mt-4 p-4 rounded text-center font-bold ${
+              className={`mt-4 p-4 text-center font-bold ${
                 isSuccess
                   ? "text-green-500 border-t border-b border-green-500"
                   : "text-red-500 border-t border-b border-red-500"
