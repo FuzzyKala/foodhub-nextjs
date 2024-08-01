@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 // Handle login request
 export async function POST(req: NextRequest) {
@@ -18,8 +19,19 @@ export async function POST(req: NextRequest) {
 
       // if the password matched with the input
       if (isMatch) {
+        // token expired time
+        const expiresIn = 60 * 60; // 1 hour
+        const token = jwt.sign(
+          { email: email },
+          process.env.JWT_SECRET ?? "defaultSecret",
+          {
+            expiresIn: expiresIn,
+          }
+        );
+        // console.log(token);
         return NextResponse.json({
           message: "Login successfully.",
+          token: token,
         });
       } else {
         return NextResponse.json(
@@ -30,7 +42,7 @@ export async function POST(req: NextRequest) {
       // if email weren't found
     } else {
       return NextResponse.json(
-        { message: "Email can no be found." },
+        { message: "Email can not be found." },
         { status: 401 }
       );
     }

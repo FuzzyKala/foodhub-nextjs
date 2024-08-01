@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 const moment = require("moment");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+
 // Registering as an user
 export async function POST(req: NextRequest) {
   const data = await req.json();
