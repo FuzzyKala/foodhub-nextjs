@@ -17,4 +17,13 @@
   .inactiveForm {
     @apply text-center text-2xl font-thin;
   }
+  .inputWrapper {
+    @apply relative flex items-center;
+  }
+  .icon {
+    @apply absolute right-3;
+  }
+  .hidden {
+    display: none;
+  }
 }
