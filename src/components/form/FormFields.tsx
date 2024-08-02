@@ -7,6 +7,10 @@ interface FormFieldsProps {
   setEmail: (email: string) => void;
   password: string;
   setPassword: (password: string) => void;
+  passwordVisible: boolean;
+  setPasswordVisible: (passwordVisible: boolean) => void;
+  passwordVisibleRef: RefObject<HTMLDivElement>;
+  togglePasswordVisibility: () => void;
   passwordStrength: string;
   forgetPasswordRef: RefObject<HTMLAnchorElement>;
   passwordStrengthRef: RefObject<HTMLParagraphElement>;
@@ -17,14 +21,13 @@ export default function FormFields({
   setEmail,
   password,
   setPassword,
+  passwordVisible,
+  setPasswordVisible,
+  passwordVisibleRef,
   passwordStrength,
   forgetPasswordRef,
   passwordStrengthRef,
 }: FormFieldsProps) {
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
   return (
     <>
       <div className={styles.inputContainer}>
@@ -33,7 +36,7 @@ export default function FormFields({
         </label>
         <div className={styles.inputWrapper}>
           <input
-            id="regEmailInput"
+            id="emailInput"
             type="email"
             autoComplete="email"
             value={email}
@@ -59,23 +62,20 @@ export default function FormFields({
         </label>
         <div className={styles.inputWrapper}>
           <input
-            id="regPasswordInput"
-            type="password"
+            id="passwordInput"
+            type={passwordVisible ? "text" : "password"} // Toggle between "text" and "password"
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             className={styles.inputBlock}
           />
-          <div className={styles.icon}>
-            <PiEyeClosedThin
-              className={` ${password && !passwordVisible ? "" : "hidden"}`}
-              onClick={togglePasswordVisibility}
-            />
-            <PiEye
-              className={`${password && passwordVisible ? "" : "hidden"}`}
-              onClick={togglePasswordVisibility}
-            />
+          <div
+            className={styles.passwordIcon}
+            onClick={() => setPasswordVisible(!passwordVisible)}
+            ref={passwordVisibleRef}
+          >
+            {passwordVisible ? <PiEye /> : <PiEyeClosedThin />}
           </div>
         </div>
         <p ref={passwordStrengthRef}>Password Strength: {passwordStrength}</p>

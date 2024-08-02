@@ -1,6 +1,6 @@
 import styles from "@/components/form/FormControl.module.css";
 import { useEffect, useState, useRef } from "react";
-import getPasswordStrength from "@/utils/passwordStrength";
+import getPasswordStrength from "@/utils/getPasswordStrength";
 import TabButtons from "@/components/form/TabButtons";
 import FormFields from "@/components//form/FormFields";
 interface FormProps {
@@ -14,6 +14,7 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordStrength, setPasswordStrength] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -26,7 +27,18 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
   const forgetPasswordRef = useRef<HTMLAnchorElement>(null);
   const submitBtnRef = useRef<HTMLButtonElement>(null);
   const passwordStrengthRef = useRef<HTMLParagraphElement>(null);
+  const passwordVisibleRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (password) {
+      passwordVisibleRef.current!.classList.remove("invisible");
+    } else {
+      setPasswordVisible(false);
+      passwordVisibleRef.current!.classList.add("invisible");
+    }
+  }, [password]);
+
+  // table click control
   const handleTabClick = (tab: string) => {
     setCurrentTab(tab);
     if (tab === "regTab") {
@@ -171,6 +183,9 @@ export default function FormControl({ FormOpen, setFormOpen }: FormProps) {
               setEmail={setEmail}
               password={password}
               setPassword={setPassword}
+              passwordVisible={passwordVisible}
+              setPasswordVisible={setPasswordVisible}
+              passwordVisibleRef={passwordVisibleRef}
               passwordStrength={passwordStrength}
               forgetPasswordRef={forgetPasswordRef}
               passwordStrengthRef={passwordStrengthRef}
