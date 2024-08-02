@@ -11,7 +11,6 @@ interface FormFieldsProps {
   passwordVisible: boolean;
   setPasswordVisible: (passwordVisible: boolean) => void;
   passwordVisibleRef: RefObject<HTMLDivElement>;
-  togglePasswordVisibility: () => void;
   passwordStrength: string;
   forgetPasswordRef: RefObject<HTMLAnchorElement>;
   passwordStrengthRef: RefObject<HTMLParagraphElement>;
