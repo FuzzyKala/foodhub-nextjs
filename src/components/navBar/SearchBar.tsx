@@ -9,9 +9,6 @@ export default function SearchBar() {
     e.preventDefault();
     console.log("Searching for:", query);
   };
-  const clearInput = () => {
-    setQuery("");
-  };
 
   return (
     <form onSubmit={handleSearch} className="flex items-center p-2 relative">
@@ -28,7 +25,7 @@ export default function SearchBar() {
         </div>
         <div className="absolute pr-3 inset-y-0 right-1 flex items-center">
           {query && (
-            <button type="button" onClick={clearInput}>
+            <button type="button" onClick={() => setQuery("")}>
               <XCircleIcon className="w-6 h-6 text-gray-400" />
             </button>
           )}

@@ -6,7 +6,7 @@
     @apply fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm z-40;
   }
   .inputContainer {
-    @apply mb-7;
+    @apply mb-5;
   }
   .inputBlock {
     @apply border-slate-400 border rounded-md h-10 w-96 px-2;
