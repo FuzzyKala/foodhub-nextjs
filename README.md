@@ -1,4 +1,4 @@
-# This is a refined version of the Foodhub project. I wasn't satisfied with that one, so I decided to remake it again in another way.
+# Refined version of the Foodhub project.
 
 <p>
   <img alt="TypeScript Badge" longdesc="Supports TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
@@ -12,6 +12,8 @@
 </p>
 
 ## Introduction:
-I deployed this project on Vercel, this is the link: https://foodhub-nextjs.vercel.app/
+I wasn't satisfied with the group project before, so I decided to remake it again in another way.
+
+I decided to deploy this project on Vercel (cause it's free), this is the link: https://foodhub-nextjs.vercel.app/
 
 I used Nextjs, PostgreSQL, and Typescript to help me finish this project.
